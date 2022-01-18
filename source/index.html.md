@@ -1,245 +1,1609 @@
----
-title: API Reference
+--- 
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+title: ParallelDots Text API 
 
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+language_tabs: 
+   - shell 
+   - ruby
+   - python
+   - java
+   - php
+   - csharp
 
-includes:
-  - errors
+toc_footers: 
+   - <a href='https://www.paralleldots.com/sign-up'>Sign Up for a Developer Key</a>
 
-search: true
+includes: 
+   - errors 
 
-code_clipboard: true
+search: true 
 
-meta:
-  - name: description
-    content: Documentation for the Kittn API
----
+--- 
 
-# Introduction
+# Introduction 
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+AI Powered Text Analysis Apis  
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+**Version:** 3.0
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+#Installation
+
+For setup and installation instruction, please visit our <a href="https://github.com/paralleldots"> Github Page </a>. Specifically, below are the links to each of our Client Libraries:
+
+-<a href="https://github.com/ParallelDots/ParallelDots-CSharp-API">C#</a><br>
+-<a href="https://github.com/ParallelDots/ParallelDots-Java-API">Java</a><br>
+-<a href="https://github.com/ParallelDots/ParallelDots-Python-API">Python</a><br>
+-<a href="https://github.com/ParallelDots/ParallelDots-PHP-API">PHP</a><br>
+-<a href="https://github.com/ParallelDots/ParallelDots-Ruby-API">Ruby</a>
+
+# List of Supported Languages with their Language Codes
+
+- Portuguese(pt)
+- Simplified Chinese(Not available in multilingual keyword generator API) (zh)
+- Spanish(es)
+- German(de)
+- French(fr)
+- Dutch(nl)
+- Italian(it)
+- Japanese(ja)
+- Thai(th)
+- Danish(da)
+- Finnish(fi)
+- Greek(el)
+- Russian(ru)
+- Arabic(ar)
+
 
 # Authentication
 
 > To authorize, use this code:
 
 ```ruby
-require 'kittn'
+require 'paralleldots'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+set_api_key("ABCdef123MNO456PQR789xyz")
 ```
 
 ```python
-import kittn
+from paralleldots import set_api_key, set_api_key
 
-api = kittn.authorize('meowmeowmeow')
+set_api_key("ABCdef123MNO456PQR789xyz")
 ```
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+
 ```
 
-```javascript
-const kittn = require('kittn');
+```java
+import paralleldots.ParallelDots;
 
-let api = kittn.authorize('meowmeowmeow');
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+# Setting your API key
+set_api_key("ABCdef123MNO456PQR789xyz"); 
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+```
+```csharp
+# Import wrapper namespace
+using ParallelDots
 
-`Authorization: meowmeowmeow`
+# Initialize instance of api class
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+```
+
+
+> Make sure to replace `ABCdef123MNO456PQR789xyz` with your API key.
+
+ParallelDots Text Analytics APIs uses an API key to authenticate requests to the API. Please pass your API key as a parameter (api_key) in each of our APIs to authenticate requests.
+
+You can register for a new API key by signing up for a [ParallelDots account](https://www.paralleldots.com/sign-up).
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>ABCdef123MNO456PQR789xyz</code> with your own API key.
 </aside>
 
-# Kittens
+# /SENTIMENT
+## ***POST*** 
 
-## Get All Kittens
+**Summary:** Find the overall sentiment of a block of text along with the confidence score.
+
+**Description:** Sentiment API accepts two parameters - text and api_key and returns a json response containing the overall sentiment of the input text and confidence score for each of the sentiment label (positive, negative and neutral). There is no limitation to the number of characters that you can pass to the API but for optimum results, please pass short texts (tweets, comments, news headlines, etc.)
 
 ```ruby
-require 'kittn'
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+sentiment( "Come on, lets play together")
+
+sentiment( "Allez, jouons ensemble", "fr")
 ```
 
 ```python
-import kittn
+from paralleldots import set_api_key, sentiment
+set_api_key("ABCdef123MNO456PQR789xyz")
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+sentiment( "Come on, lets play together" )
+
+sentiment( "Allez, jouons ensemble", "fr")
 ```
 
 ```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/sentiment?text=Come%20on%2C%20lets%20play%20together.&lang_code=en&api_key=ABCdef123MNO456PQR789xyz'
 ```
 
-```javascript
-const kittn = require('kittn');
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+String sentiment = pd.sentiment("Come on, lets play together");
+
+String sentiment_multilang = pd.sentiment("Allez, jouons ensemble", "fr");
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+set_api_key("ABCdef123MNO456PQR789xyz"); 
+
+sentiment("Come on, lets play together");
+
+sentiment_multilang("Allez, jouons ensemble", "fr");
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String sentiment = pd.sentiment("Come on, lets play together");
+
+String sentiment_multilang = pd.sentiment("Allez, jouons ensemble", "fr");
+
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+{
+  "probabilities": {
+    "positive": 0.557268,
+    "neutral": 0.417357,
+    "negative": 0.025374
   },
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "sentiment": "positive",
+  "code": 200
+}
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/sentiment
+
+`***POST*** /sentiment` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a short statement  | Yes | string |
+| api_key | query | Your API key | Yes | string |
+| lang_code | query | Language Code | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| sentiment | Type of sentiment present in text i.e (positive,neutral,negative) | string |
+| probabilities | The confidence score of each of the sentiment. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| dict |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Please wait for sometime before making further API calls |
+| 406 |Not Acceptable| Invalid Format for any of the parameters. For e.g.:sending api_key as integer instead of string. |
+
+# /SIMILARITY
+## ***POST*** 
+
+**Summary:** Find similarity between two snippets of text. 
+
+**Description:** Semantic Analysis API accepts three parameters - text_1, text_2 and api_key which are two snippets of text and the API returns a json response with an actual score (between 0 and 1) and normalized score (between 0 and 5). Please ensure there are at least **two words** in each of the text_1 and text_2 sentences otherwise the API will return an error.
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+
+similarity( "Global warming set to exceed Paris agreement’s 1.5C limit by 2040s, according to draft UN report", "There is a tipping point’: UN warns climate change goals laid out in Paris accord are almost out of reach" )
+```
+
+```python
+from paralleldots import set_api_key, similarity
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+similarity( "Global warming set to exceed Paris agreement’s 1.5C limit by 2040s, according to draft UN report", "There is a tipping point’: UN warns climate change goals laid out in Paris accord are almost out of reach" )
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v3/similarity?text_1=Global warming set to exceed Paris agreement’s 1.5C limit by 2040s, according to draft UN report&text_2=There is a tipping point’: UN warns climate change goals laid out in Paris accord are almost out of reach&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String similarity = pd.similarity("Global warming set to exceed Paris agreement’s 1.5C limit by 2040s, according to draft UN report", "There is a tipping point’: UN warns climate change goals laid out in Paris accord are almost out of reach");
+System.out.println(similarity);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+similarity("Global warming set to exceed Paris agreement’s 1.5C limit by 2040s, according to draft UN report", "There is a tipping point’: UN warns climate change goals laid out in Paris accord are almost out of reach");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String similarity = pd.similarity("Global warming set to exceed Paris agreement’s 1.5C limit by 2040s, according to draft UN report", "There is a tipping point’: UN warns climate change goals laid out in Paris accord are almost out of reach");
+Console.WriteLine(similarity);
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "actual_score": 0.492089,
+  "normalized_score": 4.088806,
+  "code": 200
+}
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/similarity
+
+`***POST*** /similarity` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text_1 | query | Pass a long statement (at least two words) | Yes | string |
+| text_2 | query | Pass a long statement (at least two words) | Yes | string |
+| api_key | query | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| actual_score | The normalized score of each of the sentiment. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| float |
+| normalized_score | The normalized score of each of the sentiment. It lies between 0 to 5 . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /NER
+## ***POST*** 
+
+**Summary:** Named Entitiy Extraction
+
+**Description:** Named-entity recognition (NER) can identify individuals, companies, places, organization, cities and other Stringious type of entities. The API accepts text and api_key as two parameters and returns a json with the entities, their category (name, place or organization) and confidence scores. 
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+ner( "Apple was founded by Steve Jobs." )
+```
+
+```python
+from paralleldots import set_api_key, ner
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+ner( "Apple was founded by Steve Jobs." )
+```
+
+```shell
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' 'https://apis.paralleldots.com/v3/ner?text=Apple was founded by Steve Jobs.&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String ner = pd.ner("Apple was founded by Steve Jobs.");
+System.out.println(ner);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+ner( "Apple was founded by Steve Jobs." );
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String ner = pd.ner( "Apple was founded by Steve Jobs." );
+Console.WriteLine(ner);
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "entities": [{
+    "category": "name",
+    "name": "Steve Jobs",
+    "confidence_score": 0.893464
+  }, {
+    "category": "group",
+    "name": "Apple",
+    "confidence_score": 0.466986
+  }],
+    "code": 200
+}
+
+```
+
+### HTTP Request
+
+**Endpoint** https://apis.paralleldots.com/v3/ner
+
+`***POST*** /ner` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a long statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| entities | Contains all the entities and their corresponding type and confidence_score | array | 
+| category | Name of the type of entity. | string |
+| name | Name of the entity. | string |
+| confidence_score | The confidence score of the entity in the text. It lies between 0 to 1 . | float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. e.g: Parameter text should be string |
+
+# /KEYWORDS
+## ***POST*** 
+
+**Summary:** Extract keywords from a block of text along with their confidence score
+
+**Description:** Keywords Extractor API accepts two parameters - text and api_key and returns a json containing an array of keywords appearing in the input text along with their confidence score. 
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+keywords("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.")
+```
+
+```python
+from paralleldots import set_api_key, keywords
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+keywords("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.")
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/keywords?text=For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String keywords = pd.keywords("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+System.out.println(keywords);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+keywords("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String keywords = pd.keywords("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+Console.WriteLine(keywords);
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "keywords": [{
+    "keyword": "Yankees",
+    "confidence_score": 0.778966
+  }, {
+    "keyword": "comeback",
+    "confidence_score": 0.877111
+  }, {
+    "keyword": "Indians",
+    "confidence_score": 0.990794
+  }, {
+    "keyword": "American League Division Series",
+    "confidence_score": 0.905312
+  }, {
+    "keyword": "Astros",
+    "confidence_score": 0.923083
+  }, {
+    "keyword": "Chris Sale",
+    "confidence_score": 0.947411
+  }, {
+    "keyword": "Red Sox",
+    "confidence_score": 0.813365
+  }],
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "code": 200
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/keywords
+
+`***POST*** /keywords` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a long statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| keywords | Contains all the keywords and their corresponding score | array | 
+| keyword | Name of the keyword | string |
+| confidence_score | The confidence score of the keyword in the text. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /TAXONOMY
+## ***POST*** 
+
+**Summary:** Classify content into IAB categories
+
+**Description:** Taxonomy API accepts two parameters - text and api_key and returns a json containing an array of top 3 categories that matches the input text.
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+taxonomy("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.")
+```
+
+```python
+from paralleldots import set_api_key, taxonomy
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+taxonomy("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.")
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/taxonomy?text=%22Prime%20Minister%20Narendra%20Modi%20tweeted%20a%20link%20to%20the%20speech%20Human%20Resource%20Development%20Minister%20Smriti%20Irani%20made%20in%20the%20Lok%20Sabha%20during%20the%20debate%20on%20the%20ongoing%20JNU%20row%20and%20the%20suicide%20of%20Dalit%20scholar%20Rohith%20Vemula%20at%20the%20Hyderabad%20Central%20University.&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String taxonomy = pd.taxonomy("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+System.out.println(taxonomy);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+taxonomy("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String taxonomy = pd.taxonomy("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+Console.WriteLine(taxonomy);
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "taxonomy": [{
+    "tag": "sports/sports news",
+    "confidence_score": 0.940908
+  }, {
+    "tag": "news/international news",
+    "confidence_score": 0.5065925121307373
+  }, {
+    "tag": "health and fitness/sports medicine",
+    "confidence_score": 0.399497
+  }],
+  "code": 200
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/taxonomy
+
+`***POST*** /taxonomy` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a long statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| taxonomy | Contains all the tags and their corresponding score | array | 
+| tag | Name of the category | string |
+| score | The confidence score of the tag in the text. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /CUSTOM_CALSSIFIER
+## ***POST*** 
+
+**Summary:** Classify content into categories and sub-categories provied by user
+
+**Description:** custom_classifier API accepts three parameters - text, api_key and category and returns a json containing an array classifying the content into categories sand sub-categories provided by the user.
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+custom_classifier("Prime Minister Narendra Modi tweeted a link to the speech Human Resource Development Minister Smriti Irani made in the Lok Sabha during the debate on the ongoing JNU row and the suicide of Dalit scholar Rohith Vemula at the Hyderabad Central University.")
+```
+
+```python
+from paralleldots import set_api_key, custom_classifier
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+custom_classifier("Prime Minister Narendra Modi tweeted a link to the speech Human Resource Development Minister Smriti Irani made in the Lok Sabha during the debate on the ongoing JNU row and the suicide of Dalit scholar Rohith Vemula at the Hyderabad Central University.")
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/custom_classifier?text=%22Prime%20Minister%20Narendra%20Modi%20tweeted%20a%20link%20to%20the%20speech%20Human%20Resource%20Development%20Minister%20Smriti%20Irani%20made%20in%20the%20Lok%20Sabha%20during%20the%20debate%20on%20the%20ongoing%20JNU%20row%20and%20the%20suicide%20of%20Dalit%20scholar%20Rohith%20Vemula%20at%20the%20Hyderabad%20Central%20University.&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String custom_classifier = pd.custom_classifier("Prime Minister Narendra Modi tweeted a link to the speech Human Resource Development Minister Smriti Irani made in the Lok Sabha during the debate on the ongoing JNU row and the suicide of Dalit scholar Rohith Vemula at the Hyderabad Central University.");
+System.out.println(custom_classifier);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+custom_classifier("Prime Minister Narendra Modi tweeted a link to the speech Human Resource Development Minister Smriti Irani made in the Lok Sabha during the debate on the ongoing JNU row and the suicide of Dalit scholar Rohith Vemula at the Hyderabad Central University.");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String custom_classifier = pd.custom_classifier("Prime Minister Narendra Modi tweeted a link to the speech Human Resource Development Minister Smriti Irani made in the Lok Sabha during the debate on the ongoing JNU row and the suicide of Dalit scholar Rohith Vemula at the Hyderabad Central University.");
+Console.WriteLine(custom_classifier);
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "taxonomy": [{
+    "confidence_score": 0.8751969934,
+    "tag": "w-d rld politics"
+  }, {
+    "confidence_score": 0.4408839941,
+    "tag": "finance"
+  }],
+  "code": 200
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/custom_classifier
+
+`***POST*** /custom_classifier` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a long statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+| category | query | categories and sub-categories of the data to be clssified into | Yes | JSON |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| taxonomy | Contains all the tags and their corresponding score | array | 
+| tag | Name of the category | string |
+| confidence_score | The confidence score of the tag in the text. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /EMOTION
+## ***POST*** 
+
+**Summary:** Find the emotion in a block of text
+
+**Description:** Similar to sentiment API, Emotion API accepts text and api_key and returns a json response containing the overall emotion of the input text and confidence score for each of the emotion label (Happy, Sad, Angry, Excited, Sarcasm or Fear.). There are no limitation to the number of characters that you can pass to the Emotion API but for optimum results, please pass short texts (tweets, comments, news headlines, etc.)
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+emotion("I am trying to imagine you with a personality.")
+emotion("Avez-vous entendu la dernière chanson de Porcupine Tree? Ça berce!", "fr")
+
+```
+
+```python
+from paralleldots import set_api_key, emotion
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+emotion("I am trying to imagine you with a personality.")
+
+emotion("Avez-vous entendu la dernière chanson de Porcupine Tree? Ça berce!", "fr")
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v3/emotion?text=I am trying to imagine you with a personality.&lang_code=en&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String emotion = pd.emotion("I am trying to imagine you with a personality.");
+
+String emotion_multilang = pd.emotion("Avez-vous entendu la dernière chanson de Porcupine Tree? Ça berce!", "fr");
+
+System.out.println(emotion);
+System.out.println(emotion_multilang);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+emotion("I am trying to imagine you with a personality.");
+
+emotion_multilang("Avez-vous entendu la dernière chanson de Porcupine Tree? Ça berce!", "fr");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String emotion = pd.emotion("I am trying to imagine you with a personality.");
+
+String emotion_multilang = pd.emotion("Avez-vous entendu la dernière chanson de Porcupine Tree? Ça berce!", "fr");
+
+Console.WriteLine(emotion);
+Console.WriteLine(emotion_multilang);
+
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+    "emotion": {
+        "emotion": "Sarcasm",
+        "probabilities": {
+            "Sarcasm": 0.24810607487877412,
+            "Angry": 0.13083650939202607,
+            "Sad": 0.1882106423954445,
+            "Fear": 0.16721800144279414,
+            "Bored": 0.06144463878173187,
+            "Excited": 0.10241008218782247,
+            "Happy": 0.10177405092140684
+        }
+    },
+    "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+    "code": 200
+}
+
+```
+
+### HTTP Request
+
+**Endpoint** https://apis.paralleldots.com/v3/emotion
+
+`***POST*** /emotion` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | formData | Pass a statement | Yes | string |
+| api_key | formData | Apikey | Yes | string |
+| lang_code | formData | Language Code | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| emotion | Type of emotion present in text i.e (angry,indifferent,sad,excited,happy) | string |
+| probabilities | The confidence score of each of the emotion. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| dict |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /INTENT
+## ***POST*** 
+
+**Summary:** Find intent of the user input
+
+**Description:** Intent API classifies the intent of a block of text as one of opinion, news, marketing, complaint, suggestion, apprectiation, query. The API accepts accepts text and api_key and returns a json response containing the overall intent of the input text and confidence score for each of the intent label. Use this API to filter our spam or marketing tweets to identify genuine tweets, building a conversational bot to understand user's intent or monitor complaints in real-time on social media channels or your own feedback platform.
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+intent("How do I cancel my ticket from the app?")
+```
+
+```python
+from paralleldots import set_api_key, intent
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+intent("How do I cancel my ticket from the app?")
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v3/intent?text=How do I cancel my ticket from the app?&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String intent = pd.intent("How do I cancel my ticket from the app?");
+System.out.println(intent);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+intent("How do I cancel my ticket from the app?");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String intent = pd.intent("How do I cancel my ticket from the app?");
+Console.WriteLine(intent);
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "probabilities": {
+    "spam/junk": 0.001,
+    "marketing": 0.0,
+    "news": 0.0,
+    "feedback/opinion": 0.001,
+    "query": 0.999
+  },
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "code": 200,
+  "intent": "query"
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/intent
+
+`***POST*** /intent` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | formData | Pass a statement | Yes | string |
+| api_key | formData | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| intent | Type of intent present in text i.e (marketing,news,query,feedback/opinion,spam/junk) | string |
+| probabilities | The confidence score of each of the intent. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| dict |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /ABUSE
+## ***POST*** 
+
+**Summary:** Filter abusive content from a text corpus
+
+**Description:** Abusive content specifier specifies whether the content is abusive or not. The API accepts two parameters - text and api_key and returns a json response classifying whether the input text has abusive content.
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+abuse("you f**king a$$hole")
+```
+
+```python
+from paralleldots import set_api_key, abuse
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+abuse("you f**king a$$hole")
+```
+
+```shell
+curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Accept: application/json' -d 'text=you%20f**king%20a%24%24hole&api_key=ABCdef123MNO456PQR789xyz' 'https://apis.paralleldots.com/v2/abuse'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String abuse = pd.abuse("you f**king a$$hole");
+System.out.println(abuse);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+abuse("you f**king a$$hole");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String abuse = pd.abuse("you f**king a$$hole");
+Console.WriteLine(abuse);
+
+```
+> The above command returns JSON structured like this:
+
+```json
   {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+    "code": 200,
+    "sentence_type": "Abusive",
+    "confidence_score": 0.953125
   }
-]
+
 ```
 
-This endpoint retrieves all kittens.
+### HTTP Request 
 
-### HTTP Request
+**Endpoint** https://apis.paralleldots.com/v3/abuse
 
-`GET http://example.com/api/kittens`
+`***POST*** /abuse` 
 
-### Query Parameters
+**Parameters**
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | formData | Pass a statement | Yes | string |
+| api_key | formData | Apikey | Yes | string |
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+**Responses**
 
-## Get a Specific Kitten
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| sentence_type | Nature of the text | string |
+| confidence_score | The confidence score of the sentence_type. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /TEXT_PARSER
+## ***POST*** 
+
+**Summary:** Syntax Analysis API returns the POS tags for an input text along with the dependency labels
+
+**Description:** The API accepts two parameters - text and api_key and returns a json containing the POS tags and dependency labels for the input text.
+
 
 ```ruby
-require 'kittn'
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+text_parser("Donald Trump is the President of the United States of America.")
 ```
 
 ```python
-import kittn
+from paralleldots import set_api_key, text_parser
+set_api_key("ABCdef123MNO456PQR789xyz")
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+text_parser("Donald Trump is the President of the United States of America.")
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v3/text_parser?text=Donald Trump is the President of the United States of America.&api_key=ABCdef123MNO456PQR789xyz'
 ```
 
-```javascript
-const kittn = require('kittn');
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+String text_parser = pd.text_parser("Donald Trump is the President of the United States of America.");
+System.out.println(text_parser);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+text_parser("Donald Trump is the President of the United States of America.");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String text_parser = pd.text_parser("Donald Trump is the President of the United States of America.");
+Console.WriteLine(text_parser);
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "output": [{
+    "text": "Donald",
+    "Dependency": "compound",
+    "Tags": "noun"
+  }, {
+    "text": "Trump",
+    "Dependency": "nominal subject",
+    "Tags": "noun"
+  }, {
+    "text": "is",
+    "Dependency": "root",
+    "Tags": "verb"
+  }, {
+    "text": "the",
+    "Dependency": "determiner",
+    "Tags": "determiner"
+  }, {
+    "text": "President",
+    "Dependency": "attribute",
+    "Tags": "noun"
+  }, {
+    "text": "of",
+    "Dependency": "prepositional modifier",
+    "Tags": "preposition or conjunction"
+  }, {
+    "text": "the",
+    "Dependency": "determiner",
+    "Tags": "determiner"
+  }, {
+    "text": "United",
+    "Dependency": "compound",
+    "Tags": "noun"
+  }, {
+    "text": "States",
+    "Dependency": "object of a preposition",
+    "Tags": "noun"
+  }, {
+    "text": "of",
+    "Dependency": "prepositional modifier",
+    "Tags": "preposition or conjunction"
+  }, {
+    "text": "America",
+    "Dependency": "object of a preposition",
+    "Tags": "noun"
+  }],
+  "code": 200
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/text_parser
+
+`***POST*** /text_parser` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| output | Contains Depency and Tag of each word in the text. | array | 
+| text | Name of the category | string |
+| Tags | The detailed part-of-speech tag. | string |
+| Depency | Syntactic dependency, i.e. the relation between text | string |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /CUSTOM_CLASSIFIER
+## ***POST*** 
+
+**Summary:** Custom Classifier API classifies an input text into user's custom defined categories
+
+**Description:** Custom Classifier eliminates the need to prepare a tranining data for building your own text classification model. The API accepts three parameters - text, category and api_key. Category list is a key-value pair object which contains main-category as the key and an array containing sub-categories as the corresponding value. The API returns a json response with the category list sorted in the descending order of confidence score. 
+
+**Please note that only the main categories will be classified in the response, sub-categories serve to expand the domain of the classification model to improve the classification accuracy. The classifier does not categorize the input text into sub-categories.**
+
+**Note:**Sub-categories are optional, pass an empty array ([]) if you do not want to specify sub-categories.
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+$obj = json_encode((object) [
+    'world politics' => ["diplomacy", "UN", "war"],
+    'finance' => ["markets", "economy","shares"]
+]);
+
+custom_classifier("Donald Trump is the President of the United States of America.",$obj)
+```
+
+```python
+from paralleldots import set_api_key, custom_classifier
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+custom_classifier("Donald Trump is the President of the United States of America.",'{"finance":["markets","economy","shares"],"world politics":["diplomacy","UN","war"]}')
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/custom_classifier?text=Donald Trump is the President of the United States of America.&api_key=ABCdef123MNO456PQR789xyz&category=%7B%22finance%22%3A%5B%22markets%22%2C%22economy%22%2C%22shares%22%5D%2C%22world%20politics%22%3A%5B%22diplomacy%22%2C%22UN%22%2C%22war%22%5D%7D"
+```
+
+```java
+import paralleldots.ParallelDots;
+import org.json.simple.parser.JSONParser;
+
+JSONParser parser = new JSONParser();
+JSONObject category = (JSONObject)parser.parse("{\"world politics\": [\"diplomacy\", \"UN\", \"war\"], \"finance\": [\"markets\", \"economy\", \"shares\"]}".trim());
+
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String custom_classifier = pd.custom_classifier("Donald Trump is the President of the United States of America.",category);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+custom_classifier("Donald Trump is the President of the United States of America.",'{"finance":["markets","economy","shares"],"world politics":["diplomacy","UN","war"]}');
+
+```
+
+```csharp
+using ParallelDots
+using Newtonsoft.Json.Linq;
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+JObject category = JObject.Parse(@"{'world politics': ['diplomacy', 'UN', 'war'], 'finance': ['markets', 'economy', 'shares']}");
+
+String custom_classifier = pd.custom_classifier("Donald Trump is the President of the United States of America.",category);
+Console.WriteLine(custom_classifier);
+
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "taxonomy": [{
+    "tag": "world politics",
+    "confidence_score": 0.9589130282402039
+  }, {
+    "tag": "finance",
+    "confidence_score": 0.4599219858646393
+  }],
+  "code": 200
 }
+
 ```
 
-This endpoint retrieves a specific kitten.
+### HTTP Request 
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+**Endpoint** https://apis.paralleldots.com/v3/custom_classifier
 
-### HTTP Request
+`***POST*** /custom_classifier` 
 
-`GET http://example.com/kittens/<ID>`
+**Parameters**
 
-### URL Parameters
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+| category | query | It is dictionary of lists where key is the category name and list values are sub-categories. | Yes | string |
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+**Responses**
 
-## Delete a Specific Kitten
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| taxonomy | Contains all the tags and their corresponding score | array | 
+| tag | Name of the category | string |
+| score | The confidence score of the tag in the text. It lies between 0 to 1 . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+
+# /PHRASE_EXTRACTOR
+## ***POST*** 
+
+**Summary:** Phrase Extractor find key phrases in a block of text.
+
+**Description:** Phrase Extractor API accepts two parameters - text and api_key and returns a json containing an array of phrases appearing in the input text along with their confidence score.
+
 
 ```ruby
-require 'kittn'
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
+phrase_extractor("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox..")
 ```
 
 ```python
-import kittn
+from paralleldots import set_api_key, phrase_extractor
+set_api_key("ABCdef123MNO456PQR789xyz")
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
+phrase_extractor( "For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox." )
+
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/text_parser?text=For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox..&api_key=ABCdef123MNO456PQR789xyz'
 ```
 
-```javascript
-const kittn = require('kittn');
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+String phrase_extractor = pd.phrase_extractor("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+System.out.println(phrase_extractor);
+
 ```
 
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+phrase_extractor("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String phrase_extractor = pd.phrase_extractor("For the Yankees, it took a stunning comeback after being down 2-0 to the Indians in the American League Division Series. For the Astros, it took beating Chris Sale to top the Red Sox.");
+Console.WriteLine(phrase_extractor);
+
+```
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "keywords": [{
+    "relevance_score": 4,
+    "keyword": "American League Division Series"
+  }, {
+    "relevance_score": 2,
+    "keyword": "stunning comeback"
+  }, {
+    "relevance_score": 2,
+    "keyword": "Red Sox"
+  }, {
+    "relevance_score": 1,
+    "keyword": "Yankees"
+  }, {
+    "relevance_score": 1,
+    "keyword": "Astros"
+  }, {
+    "relevance_score": 1,
+    "keyword": "Indians"
+  }, {
+    "relevance_score": 2,
+    "keyword": "Chris Sale"
+  }],
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "code": 200
 }
+
 ```
 
-This endpoint deletes a specific kitten.
+### HTTP Request 
 
-### HTTP Request
+**Endpoint** https://apis.paralleldots.com/v3/phrase_extractor
 
-`DELETE http://example.com/kittens/<ID>`
+`***POST*** /phrase_extractor` 
 
-### URL Parameters
+**Parameters**
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
 
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| keywords | Contains all the keywords and their corresponding score | array | 
+| keyword | Name of the keyword | string |
+| relevance_score | The confidence score of the keyword in the text. It lies between 1 to length of the sentence . Higher score states the higher confidence score of the output.| float |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /MULTILANG KEYWORDS
+## ***POST*** 
+
+**Summary:** Multilang Keywords finds keywords in all the supported languages mentioned above except Chinese.
+
+**Description:** Multilang Keywords Extractor API accepts three parameters - text, lang_code and api_key and returns a json containing an array of keywords appearing in the input text along with their confidence score.
+The API defaults English language if no lang_code is specified.
+
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+multilang_keywords( "C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition.", "fr" )
+```
+
+```python
+from paralleldots import set_api_key, multilang_keywords
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+multilang_keywords( "C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition.", "fr")
+
+```
+
+```shell
+curl -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: application/json' {"type":"formData"} 'https://apis.paralleldots.com/v2/text_parser?text=C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition.&lang_code=fr&api_key=ABCdef123MNO456PQR789xyz'
+```
+
+```java
+import paralleldots.ParallelDots;
+ParallelDots pd = new ParallelDots("ABCdef123MNO456PQR789xyz");
+
+String multilang_keywords = pd.multilang_keywords("C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition.", "fr")
+System.out.println(multilang_keywords);
+
+```
+
+```php
+require(__DIR__ . '/vendor/paralleldots/apis/autoload.php');
+
+echo multilang_keywords("C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition.", "fr");
+
+```
+
+```csharp
+using ParallelDots
+paralleldots pd = new paralleldots("ABCdef123MNO456PQR789xyz");
+
+String multilang_keywords = pd.multilang_keywords("C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition.", "fr");
+Console.WriteLine(multilang_keywords);
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "keywords": ["choisissez", "ici", "débattre", "hostile", "lopposition", "environnement", "si", "vicieusement", "attaqué"],
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "code":200
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/multilang_keywords
+
+`***POST*** /multilang_keywords` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+| lang_code | query | Language Code | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| keywords | Contains all the keywords | array |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+
+# /LANGUAGE DETECTION
+## ***POST*** 
+
+**Summary:** Language Detection API predicts the language of a piece of a text
+
+**Description:** Language Detection API accepts input text and API key to return a JSON response classifying the input text to the language detected along with a confidence score. The API can detect upto 64 languages.
+
+
+```ruby
+require 'paralleldots'
+set_api_key("ABCdef123MNO456PQR789xyz")
+
+lang_text = "C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition."
+puts( language_detection( lang_text ) )
+
+```
+
+```python
+
+import paralleldots
+lang_text = "C'est un environnement très hostile, si vous choisissez de débattre ici, vous serez vicieusement attaqué par l'opposition."
+print( paralleldots.language_detection( lang_text ) )
+
+```
+
+```shell
+
+curl -X POST \
+  https://apis.paralleldots.com/v3/language_detection \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'text=C'\''est%20un%20environnement%20tr%C3%A8s%20hostile%2C%20si%20vous%20choisissez%20de%20d%C3%A9battre%20ici%2C%20vous%20serez%20vicieusement%20attaqu%C3%A9%20par%20l'\''opposition.&api_key=ABCdef123MNO456PQR789xyz'
+
+```
+
+```java
+
+
+```
+
+```php
+
+
+```
+
+```csharp
+
+```
+> The above command returns JSON structured like this:
+
+```json
+{
+  "usage": "By accessing ParallelDots API or using information generated by ParallelDots API, you are agreeing to be bound by the ParallelDots API Terms of Use: http://www.paralleldots.com/terms-and-conditions",
+  "output": "French",
+  "code": 200,
+  "prob": 0.9999592304229736
+}
+
+```
+
+### HTTP Request 
+
+**Endpoint** https://apis.paralleldots.com/v3/language_detection
+
+`***POST*** /language_detection` 
+
+**Parameters**
+
+| Name | Located in | Description | Required | Type |
+| ---- | ---------- | ----------- | -------- | ---- |
+| text | query | Pass a statement | Yes | string |
+| api_key | query | Apikey | Yes | string |
+
+**Responses**
+
+| Name | Description | Type |
+| ---- | ----------- | ---- |
+| keywords | Contains all the keywords | array |
+
+**HTTP Error Codes**
+
+| Code | Text | Description |
+| ---- | ---- | ----------- |
+| 200 |OK| Successful response |
+| 304 |Not Modified| There was no new data to return. |
+| 500 |Internal Server Error| Backend Error. |
+| 400 |Bad Request| Please provide valid input parameter. |
+| 401 |Unauthorized| Invalid Credentials. Please provide valid API key |
+| 403 |Forbidden| Daily/Monthy Limit Exceeded. Please upgrade your account from your user dashboard at <a href="https://user.apis.paralleldots.com/user_dashboard">https://user.apis.paralleldots.com/user_dashboard</a>  |
+| 429 |Too Many Requests| Too Many Requests. Please try after sometime. |
+| 406 |Not Acceptable| Invalid Format. Parameter text should be string |
+<!-- Converted with the swagger-to-slate https://github.com/lavkumarv/swagger-to-slate -->
